@@ -15,5 +15,10 @@
         "epochblue/philip": "dev-master",
         "symfony/process": "dev-master",
         "symfony/event-dispatcher": "2.1.*"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
 }
