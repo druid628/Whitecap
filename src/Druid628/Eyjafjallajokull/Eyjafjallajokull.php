@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Eyjafjallajokull;
+namespace Druid628\Eyjafjallajokull;
 
 
 /**
@@ -17,7 +17,7 @@ namespace Eyjafjallajokull;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class EyeRoll
+class Eyjafjallajokull
 {
     const VERSION = '0.0.1-DEV';
 }

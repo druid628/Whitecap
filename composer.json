@@ -22,5 +22,10 @@
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         }
+    },
+    "autoload": {
+      "psr-0": {
+        "Druid628": "src/"
+      }
     }
 }
