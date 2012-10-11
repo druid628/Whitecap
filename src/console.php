@@ -16,14 +16,30 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\ProcessBuilder;
+use Philip\Philip;
+use Philip\IRC\Response;
+use Symfony\Component\Process\Process;
 
 $console = new Application("Eyjafjallajokull", Eyjafjallajokull::VERSION);
 
-$console->register("eyeroll:placeholder")
-    ->setDescription('PlaceHolder')
-    ->setCode(function (InputInterface $input, OutputInterface $output) use ($app) {
-        $output->writeln("  I did this  ");
+$console->register("philip:start")
+    ->setDescription('Initialize PHiliP IRC Bot')
+    ->setCode(function (InputInterface $input, OutputInterface $output) use ($app, $config) {
+        $output->writeln("  *insert magic here*  ");
+        // Create the bot, passing in configuration options
+        $bot = new Philip($config);
+        $bot->run();
+        
+        // Load my plugins
+//        $bot->loadPlugins(array('Admin', 'SwearJar', 'ImageMe', 'CannedResponse', 'Sismo'));
     
+    })
+;
+
+$console->register("philip:stop")
+    ->setDescription('Stop PHiliP IRC Bot')
+    ->setCode(function (InputInterface $input, OutputInterface $output) use ($app) {
+        $output->writeln("  *insert magic here*  ");
     })
 ;
 
