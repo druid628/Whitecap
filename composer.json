@@ -1,5 +1,5 @@
 {
-    "name": "drui628/eyjafjallajokull",
+    "name": "drui628/whitecap",
     "type": "silex-application",
     "description": "A continuous integration server -- based on sismo -- with added functionality including IRC functionality.",
     "keywords": ["sismo", "continuous integration", "irc bot"],
