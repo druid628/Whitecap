@@ -27,6 +27,17 @@ $console->register("philip:start")
     ->setDescription('Initialize PHiliP IRC Bot')
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($app) {
 
+
+            /*
+             * I'm not exactly stoked about this.
+             * Unfortunately until @epochblue or myself
+             * can figure out how to make philip return
+             * back to prompt or fork or otherwise be a
+             * long running process, this will have to
+             * do.
+             *
+             * -- @druid628
+             */
             try {
               $philip_cmd = "nohup php philip.php &";
               $process = new Process($philip_cmd, sprintf("%s/bin/", __DIR__));
