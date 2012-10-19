@@ -10,8 +10,6 @@ if (is_file(__DIR__.'/vendor/autoload.php')) {
     require_once __DIR__.'/../../autoload.php'; 
 }
 
-require(__DIR__. "/philip-config.php");
-
 // apps
 $app = require __DIR__.'/src/app.php';
 $sismo = require __DIR__.'/vendor/sismo/sismo/src/app.php';

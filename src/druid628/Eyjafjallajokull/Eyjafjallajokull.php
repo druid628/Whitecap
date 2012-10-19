@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Druid628\Eyjafjallajokull;
+namespace druid628\Eyjafjallajokull;
 
 
 /**

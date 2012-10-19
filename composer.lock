@@ -1,5 +1,5 @@
 {
-    "hash": "0b338b1d312aa215220ac810cd460c6d",
+    "hash": "a4ab19362bad7da024436c991f98b7d3",
     "packages": [
         {
             "name": "epochblue/philip",
@@ -7,12 +7,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/epochblue/philip.git",
-                "reference": "90a57532b740c417bb2b426996862f7556be01a8"
+                "reference": "1616b0da32d1af927928daf326b51a3abd9188b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/epochblue/philip/zipball/90a57532b740c417bb2b426996862f7556be01a8",
-                "reference": "90a57532b740c417bb2b426996862f7556be01a8",
+                "url": "https://github.com/epochblue/philip/zipball/85eaa9268edd2d68f21036e6c66c542da81f77f4",
+                "reference": "85eaa9268edd2d68f21036e6c66c542da81f77f4",
                 "shasum": ""
             },
             "require": {
@@ -20,7 +20,7 @@
                 "php": ">=5.3.3",
                 "symfony/event-dispatcher": "2.1.*"
             },
-            "time": "1349704597",
+            "time": "1350314049",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -41,6 +41,52 @@
             "description": "A Slim-inspired IRC bot framework",
             "homepage": "http://github.com/epochblue/philip",
             "keywords": [
+                "DSL",
+                "bot",
+                "irc"
+            ]
+        },
+        {
+            "name": "epochblue/philip-plugins",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/epochblue/philip-plugins.git",
+                "reference": "8efa407937f9c071f358f1a0572f58ad4b62f924"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/epochblue/philip-plugins/zipball/8efa407937f9c071f358f1a0572f58ad4b62f924",
+                "reference": "8efa407937f9c071f358f1a0572f58ad4b62f924",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "epochblue/philip": "dev-master"
+            },
+            "time": "1350509274",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Philip\\Plugin": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bill Israel",
+                    "email": "bill.israel@gmail.com",
+                    "homepage": "http://cubicle17.com/"
+                }
+            ],
+            "description": "Plugins for the Philip IRC bot",
+            "homepage": "http://github.com/epochblue/philip-plugins",
+            "keywords": [
+                "plugins",
+                "plugin",
                 "DSL",
                 "bot",
                 "irc"
@@ -154,12 +200,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/fabpot/Silex.git",
-                "reference": "fc82b4255ef081dd7d464c5320ca93a902f9190f"
+                "reference": "ffb53a4979b731d08dde6c7b455a9374a9ddd804"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Silex/zipball/fc82b4255ef081dd7d464c5320ca93a902f9190f",
-                "reference": "fc82b4255ef081dd7d464c5320ca93a902f9190f",
+                "url": "https://github.com/fabpot/Silex/zipball/ffb53a4979b731d08dde6c7b455a9374a9ddd804",
+                "reference": "ffb53a4979b731d08dde6c7b455a9374a9ddd804",
                 "shasum": ""
             },
             "require": {
@@ -193,7 +239,7 @@
                 "symfony/css-selector": "2.1.*",
                 "symfony/dom-crawler": "2.1.*"
             },
-            "time": "1349013590",
+            "time": "1350048193",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -813,22 +859,22 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.10.0",
+            "version": "v1.10.2",
             "source": {
                 "type": "git",
                 "url": "git://github.com/fabpot/Twig.git",
-                "reference": "v1.10.0"
+                "reference": "v1.10.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Twig/zipball/v1.10.0",
-                "reference": "v1.10.0",
+                "url": "https://github.com/fabpot/Twig/zipball/v1.10.2",
+                "reference": "v1.10.2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2012-09-28 20:11:39",
+            "time": "2012-10-15 01:23:34",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -869,6 +915,7 @@
     "stability-flags": {
         "silex/silex": 20,
         "sismo/sismo": 20,
-        "epochblue/philip": 20
+        "epochblue/philip": 20,
+        "epochblue/philip-plugins": 20
     }
 }

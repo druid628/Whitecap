@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sismo utility.
+ * This file is part of the Eyjafjallajokull utility.
  *
  * (c) Micah Breedlove <druid628@gmail.com>
  *
@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-use Druid628\Eyjafjallajokull\Eyjafjallajokull;
+use druid628\Eyjafjallajokull\Eyjafjallajokull;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
@@ -24,15 +24,21 @@ $console = new Application("Eyjafjallajokull", Eyjafjallajokull::VERSION);
 
 $console->register("philip:start")
     ->setDescription('Initialize PHiliP IRC Bot')
-    ->setCode(function (InputInterface $input, OutputInterface $output) use ($app, $config) {
-        $output->writeln("  *insert magic here*  ");
-        // Create the bot, passing in configuration options
-        $bot = new Philip($config);
-        $bot->run();
-        
-        // Load my plugins
-//        $bot->loadPlugins(array('Admin', 'SwearJar', 'ImageMe', 'CannedResponse', 'Sismo'));
-    
+    ->setCode(function (InputInterface $input, OutputInterface $output) use ($app) {
+
+            try {
+              $philip_cmd = "nohup php philip.php &";
+              $process = new Process($philip_cmd, sprintf("%s/bin/", __DIR__));
+              $philipPid= getmypid();
+              $process->setTimeout(1);
+              $process->run();
+            } catch(Exception $e) {
+              if($e instanceof RuntimeException)
+              {
+                $output->writeln(sprintf("Started. (PID: %s)", $philipPid));
+                return true;
+              }
+            }
     })
 ;
 
@@ -40,6 +46,7 @@ $console->register("philip:stop")
     ->setDescription('Stop PHiliP IRC Bot')
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($app) {
         $output->writeln("  *insert magic here*  ");
+        $output->writeln("Sorry, this isn't working yet.");
     })
 ;
 
@@ -258,6 +265,12 @@ EOF
     })
 ;
 
+/**
+ * sismo:run is commented out until I (@druid628) force an upgrade to php 5.4
+ * which is likely to happen Mid-Late Oct 2012
+ *
+ */
+/*
 $console
     ->register('sismo:run')
     ->setDefinition(array(
@@ -299,7 +312,7 @@ EOF
         });
     })
 ;
-
+*/
 
 
 
