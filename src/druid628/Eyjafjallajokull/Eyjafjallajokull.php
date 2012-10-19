@@ -19,5 +19,5 @@ namespace druid628\Eyjafjallajokull;
  */
 class Eyjafjallajokull
 {
-    const VERSION = '0.0.1-DEV';
+    const VERSION = '0.0.3-DEV';
 }
