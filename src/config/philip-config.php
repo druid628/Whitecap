@@ -11,7 +11,8 @@ $config = array(
     "channels"   => array( '#bsd-ci', '#chattanoogaPHP' ),
     "admins"     => array(  'druid628' ),
     "debug"      => false,
-    "log"        => __DIR__ . '/logs/iobot.log',
+    "log"        => __DIR__ . '/../logs/iobot.log',
+    "pid"        => __DIR__ . '/philip.pid'
 );
 
 

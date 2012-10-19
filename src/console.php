@@ -20,6 +20,7 @@ use Philip\Philip;
 use Philip\IRC\Response;
 use Symfony\Component\Process\Process;
 
+require_once(__DIR__."/config/philip-config.php");
 $console = new Application("Eyjafjallajokull", Eyjafjallajokull::VERSION);
 
 $console->register("philip:start")
@@ -35,7 +36,7 @@ $console->register("philip:start")
             } catch(Exception $e) {
               if($e instanceof RuntimeException)
               {
-                $output->writeln(sprintf("Started. (PID: %s)", $philipPid));
+                $output->writeln("  philip:  Started  ");
                 return true;
               }
             }
@@ -44,9 +45,19 @@ $console->register("philip:start")
 
 $console->register("philip:stop")
     ->setDescription('Stop PHiliP IRC Bot')
-    ->setCode(function (InputInterface $input, OutputInterface $output) use ($app) {
-        $output->writeln("  *insert magic here*  ");
-        $output->writeln("Sorry, this isn't working yet.");
+    ->setCode(function (InputInterface $input, OutputInterface $output) use ($app, $config) {
+        if(isset($config['pid']))
+        {
+            $pidFile = $config['pid'];
+            $fh = fopen($pidFile, 'r');
+            $pid = fread($fh, filesize($pidFile));
+            fclose($fh);
+            $process = new Process(sprintf("kill -9 %s", $pid));
+            $process->run();
+            unlink($pidFile);
+            $output->writeln("  philip:  Stopped  ");
+        }
+
     })
 ;
 
