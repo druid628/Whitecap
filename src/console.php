@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Eyjafjallajokull utility.
+ * This file is part of the Whitecap utility.
  *
  * (c) Micah Breedlove <druid628@gmail.com>
  *
@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-use druid628\Eyjafjallajokull\Eyjafjallajokull;
+use druid628\Whitecap\Whitecap;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,7 +21,7 @@ use Philip\IRC\Response;
 use Symfony\Component\Process\Process;
 
 require_once(__DIR__."/config/philip-config.php");
-$console = new Application("Eyjafjallajokull", Eyjafjallajokull::VERSION);
+$console = new Application("Whitecap", Whitecap::VERSION);
 
 $console->register("philip:start")
     ->setDescription('Initialize PHiliP IRC Bot')
@@ -57,9 +57,9 @@ $console->register("philip:start")
 $console->register("philip:stop")
     ->setDescription('Stop PHiliP IRC Bot')
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($app, $config) {
-        if(isset($config['pid']))
+        if(isset($config['write_pidfile']))
         {
-            $pidFile = $config['pid'];
+            $pidFile = $config['pidfile'];
             $fh = fopen($pidFile, 'r');
             $pid = fread($fh, filesize($pidFile));
             fclose($fh);

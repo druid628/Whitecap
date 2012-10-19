@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Eyjafjallajokull utility.
+ * This file is part of the Whitecap utility.
  *
  * (c) Micah Breedlove <druid628@gmail.com>
  *
@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace druid628\Eyjafjallajokull;
+namespace druid628\Whitecap;
 
 
 /**
@@ -17,7 +17,7 @@ namespace druid628\Eyjafjallajokull;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Eyjafjallajokull
+class Whitecap
 {
-    const VERSION = '0.0.3-DEV';
+    const VERSION = '0.0.5-DEV';
 }
