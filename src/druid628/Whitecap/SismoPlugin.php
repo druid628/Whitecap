@@ -48,9 +48,8 @@ class SismoPlugin extends BasePlugin
             // execute Sismo stuff
             $matches = $event->getMatches();
             $project = $sismo->getProject($matches[0]);
-            $output = sprintf("SISMO: %s build status: %s", $project->getName(), $project->getStatus());
 
-            $event->addResponse( Response::msg($event->getRequest()->getSource(), $output) );
+            $event->addResponse( Response::msg($event->getRequest()->getSource(), sprintf("SISMO: %s build status: %s", $project->getName(), $project->getStatus() )) );
         });
 
 
@@ -72,8 +71,8 @@ class SismoPlugin extends BasePlugin
 
             while($project->isBuilding()) {
             }
-            $output = sprintf("SISMO: %s build status: %s", $project->getName(), $project->getStatus());
-            $event->addResponse( Response::msg($event->getRequest()->getSource(), $output) );
+            
+            $event->addResponse( Response::msg($event->getRequest()->getSource(), sprintf("SISMO: %s build status: %s", $project->getName(), $project->getStatus() )) );
 
         });
 
