@@ -58,10 +58,9 @@ $console->register("philip:start")
 $console->register("philip:stop")
     ->setDescription('Stop PHiliP IRC Bot')
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($app, $philipConfig) {
-        if(isset($config['write_pidfile']))
+        if(isset($philipConfig['write_pidfile']))
         {
-            $config = $philipConfig;
-            $pidFile = $config['pidfile'];
+            $pidFile = $philipConfig['pidfile'];
             $fh = fopen($pidFile, 'r');
             $pid = fread($fh, filesize($pidFile));
             fclose($fh);
@@ -73,8 +72,6 @@ $console->register("philip:stop")
 
     })
 ;
-
-// Begin test code
 
 $console
     ->register('sismo:status')
@@ -121,9 +118,7 @@ EOF
 ;
 
 
-// End   test code
-
-
+// projects -- from sismo's console.php
 $console->register("sismo:projects")
     ->setDescription('List available projects')
     ->setHelp(<<<EOF
@@ -151,7 +146,7 @@ EOF
     })
 ;
 
-//
+// output -- from sismo's console.php
 $console
     ->register('sismo:output')
     ->setDefinition(array(
@@ -345,6 +340,7 @@ EOF
  *
  */
 /*
+// run -- from sismo's console.php
 $console
     ->register('sismo:run')
     ->setDefinition(array(

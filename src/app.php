@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sismo utility.
+ * This file is part of the Whitecap utility.
  *
  * (c) Micah Breedlove <druid628@gmail.com>
  *
