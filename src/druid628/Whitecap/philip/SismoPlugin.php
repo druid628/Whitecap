@@ -9,10 +9,12 @@
  * with this source code in the file LICENSE.
  */
 
-namespace druid628\Whitecap;
+namespace druid628\Whitecap\philip;
 
 use Philip\AbstractPlugin as BasePlugin;
 use Philip\IRC\Response;
+use Symfony\Component\Process;
+use druid628\Whitecap\VolcanoDI;
 
 /**
  * Adds Sismo (Continuous Integration) functionality to the Philip IRC bot.
@@ -42,18 +44,27 @@ class SismoPlugin extends BasePlugin
     {
         $bot    = $this->bot;
         $config = $bot->getConfig();
-        $sismo  = $config['sismo'];
+        //$sismo  = $config['sismo'];
 
-        $this->bot->onChannel("/^!status ([\w-_]*)/", function($event) use ($sismo) {
+        $this->bot->onChannel("/^!status ([\w-_]*)/", function($event) {
+            $joe = new VolcanoDI();
+            $sismo = $joe->getSismo();
             // execute Sismo stuff
             $matches = $event->getMatches();
-            $project = $sismo->getProject($matches[0]);
+            $slug = $matches[0];
+            if(!$sismo->hasProject($slug)) {
+                $event->addResponse( Response::msg($event->getRequest()->getSource(), sprintf("SISMO: Unable to find project with slug: %s", $slug) ) );
+                return false;
+            }
+                $project = $sismo->getProject($slug);
 
             $event->addResponse( Response::msg($event->getRequest()->getSource(), sprintf("SISMO: %s build status: %s", $project->getName(), $project->getStatus() )) );
         });
 
 
-        $this->bot->onChannel("/^!projects/", function($event) use ($sismo) {
+        $this->bot->onChannel("/^!projects/", function($event)  {
+            $joe = new VolcanoDI();
+            $sismo = $joe->getSismo();
             $event->addResponse( Response::msg($event->getRequest()->getSource(), "SISMO: The following projects are available.") );
             $event->addResponse( Response::msg($event->getRequest()->getSource(), "   Project (slug)") );
             // execute Sismo stuff
@@ -63,15 +74,28 @@ class SismoPlugin extends BasePlugin
 
         });
 
-        $this->bot->onChannel("/^!build ([\w-_]*)/", function($event) use ($sismo) {
+        $this->bot->onChannel("/^!build ([\w-_]*)/", function($event) {
+            $joe = new VolcanoDI();
+            $sismo = $joe->getSismo();
+
             // execute Sismo stuff
             $matches = $event->getMatches();
-            $project = $sismo->getProject($matches[0]);
+            $slug = $matches[0];
+            if(!$sismo->hasProject($slug)) {
+                $event->addResponse( Response::msg($event->getRequest()->getSource(), sprintf("SISMO: Unable to find project with slug: %s", $slug) ) );
+                return false;
+            }
+ 
+            $project = $sismo->getProject($slug);
             $sismo->build($project);
 
             while($project->isBuilding()) {
             }
-            
+
+            $joe = new VolcanoDI(); // get new instance of Sismo because regardless the status of the build... it will give the old status
+            $sismo = $joe->getSismo(); 
+            $project = $sismo->getProject($slug);
+
             $event->addResponse( Response::msg($event->getRequest()->getSource(), sprintf("SISMO: %s build status: %s", $project->getName(), $project->getStatus() )) );
 
         });

@@ -6,20 +6,18 @@
  */
 require __DIR__ . '/../../vendor/autoload.php';
 require_once(__DIR__ . '/../config/philip-config.php');
-$sismo = require __DIR__.'/../../vendor/sismo/sismo/src/app.php';
 
 use Philip\Philip;
 use Philip\IRC\Response;
 use Symfony\Component\Process\Process;
 
-$philipConfig['sismo'] = $app['sismo'];
 // Create the bot, passing in configuration options
 $bot = new Philip($philipConfig);
 
 // Load my plugins
 $bot->loadPlugins(array(
     'Philip\\Plugin\\AdminPlugin',
-    'druid628\\Whitecap\\SismoPlugin',
+    'druid628\\Whitecap\\philip\\SismoPlugin',
 ));
 
 // Ready, set, go.
