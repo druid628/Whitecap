@@ -56,9 +56,11 @@ class SismoPlugin extends BasePlugin
                 $event->addResponse( Response::msg($event->getRequest()->getSource(), sprintf("SISMO: Unable to find project with slug: %s", $slug) ) );
                 return false;
             }
-                $project = $sismo->getProject($slug);
+            $project = $sismo->getProject($slug);
+            $commit = $project->getLatestCommit();
 
-            $event->addResponse( Response::msg($event->getRequest()->getSource(), sprintf("SISMO: %s build status: %s", $project->getName(), $project->getStatus() )) );
+            $event->addResponse( Response::msg($event->getRequest()->getSource(), sprintf("SISMO: %s build status: %s (%s)", $project->getName(), $project->getStatus(), $commit->getShortSha() )) );
+
         });
 
 
@@ -97,8 +99,9 @@ class SismoPlugin extends BasePlugin
              */
             $sismo = $joe->getSismo();  
             $project = $sismo->getProject($slug);
+            $commit = $project->getLatestCommit();
 
-            $event->addResponse( Response::msg($event->getRequest()->getSource(), sprintf("SISMO: %s build status: %s", $project->getName(), $project->getStatus() )) );
+            $event->addResponse( Response::msg($event->getRequest()->getSource(), sprintf("SISMO: %s build status: %s (%s)", $project->getName(), $project->getStatus(), $commit->getShortSha() )) );
 
         });
 

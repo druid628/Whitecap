@@ -2,12 +2,13 @@
     "name": "drui628/whitecap",
     "type": "silex-application",
     "description": "A continuous integration server -- based on sismo -- with added functionality including IRC functionality.",
-    "keywords": ["sismo", "continuous integration", "irc bot"],
-    "license": "BSD-3-Clause",
+    "keywords": ["sismo", "continuous integration", "irc", "bot"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Micah Breedlove",
-            "email": "druid628@gmail.com"
+            "email": "druid628@gmail.com",
+            "homepage": "http://micah.breedlove.in/"
         }
     ],
     "require": {
