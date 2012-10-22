@@ -21,24 +21,38 @@ use Pimple;
 class VolcanoDI extends Pimple // also known as Joe
 {
 
-    public function __construct() {
+    /**
+     * 
+     * @return Sismo
+     */
+    public function getSismo() 
+    {
+        $this->prepareSismo();
+        return $this['sismo'];
+    }
 
-    // Debating if I should just move all this to getSismo :-/
-    $this['data.path']   = getenv('SISMO_DATA_PATH') ?: getenv('HOME').'/.sismo/data';
-    $this['config.file'] = getenv('SISMO_CONFIG_PATH') ?: getenv('HOME').'/.sismo/config.php';
-    $this['config.storage.file'] = getenv('SISMO_STORAGE_PATH') ?: getenv('HOME').'/.sismo/storage.php';
-    $this['build.path']  = $this->share(function ($this) { return $this['data.path'].'/build'; });
-    $this['db.path']     = $this->share(function ($this) {
-        if (!is_dir($this['data.path'])) {
-            mkdir($this['data.path'], 0777, true);
-        }
-    
-        return $this['data.path'].'/sismo.db';
-    });
-    $this['twig.cache.path'] = $this->share(function ($this) { return $this['data.path'].'/cache'; });
-    $this['git.path']        = getenv('SISMO_GIT_PATH') ?: 'git';
-    $this['git.cmds']        = array();
-    $this['db.schema']       = <<<EOF
+    /**
+     * Used to build instances of Sismo 
+     * Code taken from Sismo/src/app.php written by Fabpot
+     * Modified by druid628
+     */
+    private function prepareSismo() 
+    {
+        $this['data.path']   = getenv('SISMO_DATA_PATH') ?: getenv('HOME').'/.sismo/data';
+        $this['config.file'] = getenv('SISMO_CONFIG_PATH') ?: getenv('HOME').'/.sismo/config.php';
+        $this['config.storage.file'] = getenv('SISMO_STORAGE_PATH') ?: getenv('HOME').'/.sismo/storage.php';
+        $this['build.path']  = $this->share(function ($this) { return $this['data.path'].'/build'; });
+        $this['db.path']     = $this->share(function ($this) {
+            if (!is_dir($this['data.path'])) {
+                mkdir($this['data.path'], 0777, true);
+            }
+        
+            return $this['data.path'].'/sismo.db';
+        });
+        $this['twig.cache.path'] = $this->share(function ($this) { return $this['data.path'].'/cache'; });
+        $this['git.path']        = getenv('SISMO_GIT_PATH') ?: 'git';
+        $this['git.cmds']        = array();
+        $this['db.schema']       = <<<EOF
 CREATE TABLE IF NOT EXISTS project (
     slug        TEXT,
     name        TEXT,
@@ -63,65 +77,60 @@ CREATE TABLE IF NOT EXISTS `commit` (
 );
 EOF;
     
-    $that = $this;
-    $this['db'] = $this->share(function () use (&$that) {
-        $db = new \SQLite3($that['db.path']);
-        $db->busyTimeout(1000);
-        $db->exec($that['db.schema']);
-    
-        return $db;
-    });
+        $that = $this; // when converting to php 5.4 undo this
 
-    $this['storage'] = $this->share(function () use (&$that) {
-        if (is_file($that['config.storage.file'])) {
-            $storage = require $that['config.storage.file'];
-        } else {
-            $storage = new Storage($that['db']);
-        }
-    
-        return $storage;
-    });
-    
-    $this['builder'] = $this->share(function () use (&$that) {
-        $process = new Process(sprintf('%s --version', $that['git.path']));
-        if ($process->run() > 0) {
-            throw new \RuntimeException(sprintf('The git binary cannot be found (%s).', $that['git.path']));
-        }
-    
-        return new Builder($that['build.path'], $that['git.path'], $that['git.cmds']);
-    });
-    
-    $this['sismo'] = $this->share(function () use (&$that) {
-        $sismo = new Sismo($that['storage'], $that['builder']);
-        if (!is_file($that['config.file'])) {
-            throw new \RuntimeException(sprintf("Looks like you forgot to define your projects.\nSismo looked into \"%s\".", $that['config.file']));
-        }
-        $projects = require $that['config.file'];
-    
-        if (null === $projects) {
-            throw new \RuntimeException(sprintf('The "%s" configuration file must return an array of Projects (returns null).', $that['config.file']));
-        }
-    
-        if (!is_array($projects)) {
-            throw new \RuntimeException(sprintf('The "%s" configuration file must return an array of Projects (returns a non-array).', $that['config.file']));
-        }
-    
-        foreach ($projects as $project) {
-            if (!$project instanceof Project) {
-                throw new \RuntimeException(sprintf('The "%s" configuration file must return an array of Project instances.', $that['config.file']));
+        $this['db'] = $this->share(function () use (&$that) {
+            $db = new \SQLite3($that['db.path']);
+            $db->busyTimeout(1000);
+            $db->exec($that['db.schema']);
+        
+            return $db;
+        });
+
+        $this['storage'] = $this->share(function () use (&$that) {
+            if (is_file($that['config.storage.file'])) {
+                $storage = require $that['config.storage.file'];
+            } else {
+                $storage = new Storage($that['db']);
             }
-    
-            $sismo->addProject($project);
-        }
-    
-        return $sismo;
-    });
+        
+            return $storage;
+        });
+        
+        $this['builder'] = $this->share(function () use (&$that) {
+            $process = new Process(sprintf('%s --version', $that['git.path']));
+            if ($process->run() > 0) {
+                throw new \RuntimeException(sprintf('The git binary cannot be found (%s).', $that['git.path']));
+            }
+        
+            return new Builder($that['build.path'], $that['git.path'], $that['git.cmds']);
+        });
+        
+        $this['sismo'] = $this->share(function () use (&$that) {
+            $sismo = new Sismo($that['storage'], $that['builder']);
+            if (!is_file($that['config.file'])) {
+                throw new \RuntimeException(sprintf("Looks like you forgot to define your projects.\nSismo looked into \"%s\".", $that['config.file']));
+            }
+            $projects = require $that['config.file'];
+        
+            if (null === $projects) {
+                throw new \RuntimeException(sprintf('The "%s" configuration file must return an array of Projects (returns null).', $that['config.file']));
+            }
+        
+            if (!is_array($projects)) {
+                throw new \RuntimeException(sprintf('The "%s" configuration file must return an array of Projects (returns a non-array).', $that['config.file']));
+            }
+        
+            foreach ($projects as $project) {
+                if (!$project instanceof Project) {
+                    throw new \RuntimeException(sprintf('The "%s" configuration file must return an array of Project instances.', $that['config.file']));
+                }
+        
+                $sismo->addProject($project);
+            }
+        
+            return $sismo;
+        });
     }
-
-    public function getSismo() 
-    {
-        return $this['sismo'];
-    }
-
 
 }

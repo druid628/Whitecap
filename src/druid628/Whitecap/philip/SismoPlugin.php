@@ -92,8 +92,10 @@ class SismoPlugin extends BasePlugin
             while($project->isBuilding()) {
             }
 
-            $joe = new VolcanoDI(); // get new instance of Sismo because regardless the status of the build... it will give the old status
-            $sismo = $joe->getSismo(); 
+            /* get new instance of Sismo because regardless the status of the 
+             * build... it will give the old status
+             */
+            $sismo = $joe->getSismo();  
             $project = $sismo->getProject($slug);
 
             $event->addResponse( Response::msg($event->getRequest()->getSource(), sprintf("SISMO: %s build status: %s", $project->getName(), $project->getStatus() )) );
