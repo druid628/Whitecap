@@ -1,5 +1,5 @@
 {
-    "hash": "e13e4c72c3d50aa6f93510105c9e7fa8",
+    "hash": "85edb88a33641266806fc7b736792387",
     "packages": [
         {
             "name": "epochblue/philip",
@@ -278,12 +278,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Sismo",
-                "reference": "696d9895c21413405a268ce19714a222e6c3b5e4"
+                "reference": "af6300b6a0dcac746a8fb3f5753c5a3bcd963469"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Sismo/zipball/696d9895c21413405a268ce19714a222e6c3b5e4",
-                "reference": "696d9895c21413405a268ce19714a222e6c3b5e4",
+                "url": "https://github.com/fabpot/Sismo/zipball/af6300b6a0dcac746a8fb3f5753c5a3bcd963469",
+                "reference": "af6300b6a0dcac746a8fb3f5753c5a3bcd963469",
                 "shasum": ""
             },
             "require": {
@@ -300,7 +300,7 @@
                 "symfony/browser-kit": "2.1.*",
                 "symfony/css-selector": "2.1.*"
             },
-            "time": "1349455536",
+            "time": "1350829509",
             "type": "silex-application",
             "installation-source": "source",
             "autoload": {
