@@ -28,7 +28,6 @@ $console->register("philip:start")
     ->setDescription('Initialize PHiliP IRC Bot')
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($app) {
 
-
             /*
              * I'm not exactly stoked about this.
              * Unfortunately until @epochblue or myself
@@ -39,17 +38,18 @@ $console->register("philip:start")
              *
              * -- @druid628
              */
-            try {
-              $philip_cmd = "nohup php philip.php &";
-              $process = new Process($philip_cmd, sprintf("%s/bin/", __DIR__));
-              $philipPid= getmypid();
-              $process->setTimeout(1);
-              $process->run();
+            try 
+            {
+                $philip_cmd = "nohup php philip.php &";
+                $process = new Process($philip_cmd, sprintf("%s/bin/", __DIR__));
+                $philipPid= getmypid();
+                $process->setTimeout(1);
+                $process->run();
             } catch(Exception $e) {
               if($e instanceof RuntimeException)
               {
-                $output->writeln("  philip:  Started  ");
-                return true;
+                  $output->writeln("  philip:  Started  ");
+                  return true;
               }
             }
     })
@@ -80,8 +80,7 @@ $console->register("philip:stop")
 $console
     ->register('sismo:status')
     ->setDefinition(array(
-        new InputArgument('slug', InputArgument::REQUIRED, 'Project slug'),
-    ))
+        new InputArgument('slug', InputArgument::REQUIRED, 'Project slug') ))
     ->setDescription('Displays the current status for a project')
     ->setHelp(<<<EOF
 The <info>%command.name%</info> command displays the current status for a project:
