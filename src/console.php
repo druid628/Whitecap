@@ -61,13 +61,17 @@ $console->register("philip:stop")
         if(isset($philipConfig['write_pidfile']))
         {
             $pidFile = $philipConfig['pidfile'];
-            $fh = fopen($pidFile, 'r');
-            $pid = fread($fh, filesize($pidFile));
-            fclose($fh);
-            $process = new Process(sprintf("kill -9 %s", $pid));
-            $process->run();
-            unlink($pidFile);
-            $output->writeln("  philip:  Stopped  ");
+            if( file_exists($pidFile) ) {
+                $fh = fopen($pidFile, 'r');
+                $pid = fread($fh, filesize($pidFile));
+                fclose($fh);
+                $process = new Process(sprintf("kill -9 %s", $pid));
+                $process->run();
+                unlink($pidFile);
+                $output->writeln("  philip:  Stopped  ");
+            } else {
+                $output->writeln("  philip:  Not running! (no pidfile) ");
+            }
         }
 
     })
